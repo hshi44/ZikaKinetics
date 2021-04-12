@@ -4,7 +4,7 @@
 ##Loading the packages##
 library(deSolve)
 library(minpack.lm)
-DVdir <- "ZikaModelParameterOptimization//ZikaKinetics/" ##Direcoty where data files are##
+DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Direcoty where data files are##
 
 ##Defining the model##
 gamma_delay_model <- function(time, y, parms,nv){
