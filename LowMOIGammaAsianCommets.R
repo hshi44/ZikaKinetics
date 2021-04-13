@@ -54,8 +54,7 @@ spc <- read.csv(paste0(DVdir,'LowMOIStainingPercentage.csv'))
 ##Time rage of the intergration##
 t <- c(seq(0,150,length=300),virus2$Time)
 t <- sort(unique(t))
-##Defining initial conditions##
-y0=c(S = 3.5e5, V = 682, E,I)
+
 ##Defining parameters with input or by for loops##
 k1 = 3.11e-2
 N = 1.94e6
@@ -78,7 +77,10 @@ nv<-c(ne=ne,ni=ni)
 
 put2 <- NULL#Defining a dataframe/vector to store the prediction error#
 
+##Defining initial conditions##
+y0=c(S = 3.5e5, V = 682, E,I)
 
+##Optimization of parameters##
 #for (j in 1:2){
   #for (l in 1:2){
     parms <-c(k2 = 4e-6,taue=7.2,taui=100 ,k5 =0.68)
