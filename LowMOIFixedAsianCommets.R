@@ -4,7 +4,9 @@
 ##Loading the packages##
 library(deSolve)
 library(minpack.lm)
-DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Direcoty where data files are##
+##Direcoty where data files are##
+#DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" 
+DVdir <-""
 
 ##Defining the model##
 fix_delay_ms <- function(time, y,parm){
@@ -51,11 +53,12 @@ put2 <- NULL
 ##Defining initial conditions##
 y0=c(S=3.5e5,I1=0,I2=0,V=682)
 
-##Defining parameters with input or by for loops##
+##Measured parameters##
 k1 = 3.11e-2
 N = 1.94e6
 k6=0.06470
 
+##Parameter fitting. Different strating values can be set by external input or for loops. res2 is the prediction error.##
 #for (j in 1:2){
   #for (l in 1:2){
     parms<-c(k2=6.1e-6,k4=1.6e-2,k5=0.9,tau=8.5)
@@ -74,5 +77,5 @@ k6=0.06470
   #}
 #}
 ##The parameters and the evaluation as the output##
-write.csv(put2,file = paste0(DVdir,'MSFD/Asian.csv'))
+write.csv(put2,file = paste0(DVdir,'MSFD_Asian.csv'))
 #write.csv(put2,file = paste0(DVdir,'MSFD/Asiann',ind,'.csv'))

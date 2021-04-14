@@ -4,7 +4,8 @@
 ##Loading the packages##
 library(deSolve)
 library(minpack.lm)
-DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Direcoty where data files are##
+#DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Direcoty where data files are##
+DVdir <-""
 
 ##Defining the model##
 exp_delay_full_model <- function(time, y, parms){
@@ -44,15 +45,16 @@ y0e<-c(S=3.5e5,I1=0,I2=0,V=5.32e3)
 
 put <- NULL#Defining a dataframe/vector to store the prediction error#
 
-##Defining parameters with input or by for loops##
+##Measured parameters##
 k1 = 3.11e-2
 N = 1.94e6
 k6=0.05089
 
+##Parameter fitting. Different strating values can be set by external input or for loops. res2 is the prediction error.##
 #for(j in seq(1.50,1.56,0.002)){
 #  for(l in seq(3.4,3.8,0.02)){
     parms<-c(k2=1.6e-7,k3=1.0e-6,k4=1e-5,k5=50)
-    fit_af_cm <- nls.lm(parms,fn=ssq, control = nls.lm.control(maxiter = 800))#Nonlinear Least Squares to minimize the prediction errors#
+    fit_af_cm <- nls.lm(parms,fn=ssq, lower = c (1e-10,1e-10,0,1e-4),upper=c(0.1,10,10,1e6),control = nls.lm.control(maxiter = 800))#Nonlinear Least Squares to minimize the prediction errors#
     ##Integration and calculation of the prediction error##
     out <- ode(y0e,t,exp_delay_full_model,fit_af_cm$par)
     prd <- data.frame(out)
@@ -69,4 +71,4 @@ k6=0.05089
 #}
 
 ##The parameters and the evaluation as the output##
-write.csv(put,file = paste0(DVdir,'MSED/African.csv'))
+write.csv(put,file = paste0(DVdir,'MSED_African.csv'))
