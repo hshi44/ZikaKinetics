@@ -4,7 +4,7 @@
 ##Loading the packages##
 library(deSolve)
 library(minpack.lm)
-DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Replace "ZikaModelParameterOptimization" with pathname of the directory##
+#DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Replace "ZikaModelParameterOptimization" with pathname of the directory##
 
 ##Defining the model##
 exp_delay_simple_model <- function(time, y, parms){
@@ -26,7 +26,8 @@ ssq_ed <- function(p){
 }
 
 ##Reading experimetnal data from file(s)##
-counts <- read.csv(paste0(DVdir,'CountsforHighMOIModel.csv'))
+#counts <- read.csv(paste0(DVdir,'CountsforHighMOIModel.csv'))
+counts <- read.csv('CountsforHighMOIModel.csv')
 virus <- data.frame(counts[,c(1,2)])
 colnames(virus) <- c("time","V")
 ##Time rage of the intergration##
@@ -56,4 +57,5 @@ k6=0.05089
 #}
 
 ##The parameters and the evaluation as the output##
-write.csv(put,file = paste0(DVdir,'OSED/African.csv'))
+#write.csv(put,file = paste0(DVdir,'OSED/African.csv'))
+write.csv(put,file = 'OSED_African.csv')

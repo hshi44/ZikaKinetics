@@ -4,7 +4,8 @@
 ##Loading the packages##
 library(deSolve)
 library(minpack.lm)
-DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Direcoty where data files are. Replace "ZikaModelParameterOptimization" with the pathname.##
+#DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Direcoty where data files are. Replace "ZikaModelParameterOptimization" with the pathname.##
+DVdir <- ""
 
 ##Defining the model##
 exp_delay_simple_model <- function(time, y, parms){
@@ -56,4 +57,4 @@ k6=0.06470
 #}
 
 ##The parameters and the evaluation as the output##
-write.csv(put,file = paste0(DVdir,'OSED/Asian.csv'))
+write.csv(put,file = paste0(DVdir,'OSED_Asian.csv'))
