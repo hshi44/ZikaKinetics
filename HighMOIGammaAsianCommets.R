@@ -4,7 +4,8 @@
 ##Loading the packages##
 library(deSolve)
 library(minpack.lm)
-DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Replace "ZikaModelParameterOptimization" with pathname of the directory##
+#DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Replace "ZikaModelParameterOptimization" with pathname of the directory##
+DVdir <-""
 
 ##Defining the model##
 gamma_test <- function(time, y, parms,nv){
@@ -89,4 +90,4 @@ y0=c(V = 0.1, E,I)
 #}
 
 ##The parameters and the evaluation as the output##
-write.csv(put,file = paste0(DVdir,'OSGD/Asian.csv'))
+write.csv(put,file = paste0(DVdir,'OSGD_Asian.csv'))
