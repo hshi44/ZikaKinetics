@@ -14,3 +14,6 @@ Packages deSolve and minpack.lm need are necessary for running the scripts. Excu
 The directory of the data files is set by the variable DVdir, and can be customized. The sripts will read data files from the directory and write output to it.
 To achieve the minimal pretion error, usually multiple starting values of parameters need to be tested. This can be done by for loops, and the scripts also provide the option of defining the starting values by an input and running the srcipts in batch.
 
+Raw data
+
+Degradation.csv
