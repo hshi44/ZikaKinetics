@@ -61,7 +61,7 @@ k6=0.05089
     parms<-c(k2=1.2e-7,k4=1.0e-2,k5=5.4,tau=15.5)
     fit_af_msfd <- nls.lm(parms,fn=ssq_af, lower = c (1e-9,0,0.1,1),control = nls.lm.control(maxiter = 1000))#Nonlinear Least Squares to minimize the prediction errors#
     ##Integration and calculation of the prediction error##
-    out <- ode(y0,virus2$Time,fix_delay_ms,fit_af_msfd$par)
+    out <- ode(y0,t,fix_delay_ms,fit_af_msfd$par)
     prd <- data.frame(out)
     prd <- prd[prd$time %in% virus2$Time,]
     res <- (prd$V-virus2$VR.Avg)/virus2$VR.Sdv
