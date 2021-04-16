@@ -58,13 +58,13 @@ k1 = 3.11e-2
 N = 1.94e6
 k6=0.06470
 
-##Parameter fitting. Different strating values can be set by external input or for loops. res2 is the prediction error.##
+##Parameter fitting. Different strating values can be set by external input or for loops. res is the prediction error.##
 #for (j in 1:2){
   #for (l in 1:2){
-    parms<-c(k2=6.1e-6,k4=1.6e-2,k5=0.9,tau=8.5)
+    parms<-c(k2=6.1e-6,k4=1.6e-2,k5=0.94,tau=8.5)
     fit_as_msfd <- nls.lm(parms,fn=ssq_as, lower = c (1e-9,1e-9,0.01,1),control = nls.lm.control(maxiter = 1000))#Nonlinear Least Squares to minimize the prediction errors#
     ##Integration and calculation of the prediction error##
-    out <- ode(y0,virus2$Time,fix_delay_ms,fit_as_msfd$par)
+    out <- ode(y0,t,fix_delay_ms,fit_as_msfd$par)
     prd <- data.frame(out)
     prd <- prd[prd$time %in% virus2$Time,]
     res <- (prd$V-virus2$PR.Avg)/virus2$PR.Sdv
