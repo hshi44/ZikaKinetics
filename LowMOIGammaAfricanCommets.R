@@ -78,7 +78,7 @@ nv<-c(ne=ne,ni=ni)
 put2 <- NULL#Defining a dataframe/vector to store the prediction error#
 
 ##Defining initial conditions##
-y0=c(S = 3.5e5, V = 682, E,I)
+y0=c(S = 3.5e5, V = 5.32e3, E,I)
 
 ##Optimization of parameters##
 #for (j in 1:2){
