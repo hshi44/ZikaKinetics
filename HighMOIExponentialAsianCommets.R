@@ -47,7 +47,7 @@ k6=0.06470
 #for(j in 1:10){
 #  for(l in 1:10){
     parms<-c(k3=5.6e-5,k4=1e-8,k5=1.3)
-    fit_as_ed <- nls.lm(par=parms,fn=ssq_ed,lower = c (1e-8,1e-9,0.1),control = nls.lm.control(maxiter = 300))#Nonlinear Least Squares to minimize the prediction errors#
+    fit_as_ed <- nls.lm(par=parms,fn=ssq_ed,lower = c (1e-8,0,0.1),control = nls.lm.control(maxiter = 300))#Nonlinear Least Squares to minimize the prediction errors#
     ##Integration and calculation of the prediction error##
     out <- ode(y0,virus$time,exp_delay_simple_model,fit_as_ed$par)
     prd <- data.frame(out)
