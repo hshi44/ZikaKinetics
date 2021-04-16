@@ -32,7 +32,7 @@ gamma_delay_model <- function(time, y, parms,nv){
 ssq_msaf <- function(p){
   t <- c(seq(0,150,length=300),virus2$Time)
   t <- sort(unique(t))
-  out <- ode(y0,t,gamma_delay_model,p)
+  out <- dede(y0,t,gamma_delay_model,p)
   prd <- data.frame(out)
   prd <- prd[prd$time %in% virus2$Time,]
   res <- (prd$V-virus2$VR.Avg)/virus2$VR.Sdv
@@ -86,7 +86,7 @@ y0=c(S = 3.5e5, V = 5.32e3, E,I)
     parms <-c(k2 = 1.4e-7,taue=27.7,taui=9.1 ,k5 =49.9)
     fit_af_gd <- nls.lm(par=parms,fn=ssq_msaf, lower = c (1e-9,0.5,0.5,1e-4),control = nls.lm.control(maxiter = 1000))#Nonlinear Least Squares to minimize the prediction errors#
     ##Integration and calculation of the prediction error##
-    out <- ode(y0,t,gamma_delay_model,fit_af_gd$par)
+    out <- dede(y0,t,gamma_delay_model,fit_af_gd$par)
     prd <- data.frame(out)
     prd <- prd[prd$time %in% virus2$Time,]
     res <- (prd$V-virus2$VR.Avg)/virus2$VR.Sdv
