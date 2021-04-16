@@ -4,7 +4,9 @@
 ##Loading the packages##
 library(deSolve)
 library(minpack.lm)
-DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Direcoty where data files are##
+##Direcoty where data files are##
+#DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" 
+DVdir <-""
 
 ##Defining the model##
 gamma_delay_model <- function(time, y, parms,nv){
@@ -55,11 +57,12 @@ spc <- read.csv(paste0(DVdir,'LowMOIStainingPercentage.csv'))
 t <- c(seq(0,150,length=300),virus2$Time)
 t <- sort(unique(t))
 
-##Defining parameters with input or by for loops##
+##Measured parameters##
 k1 = 3.11e-2
 N = 1.94e6
 k6=0.05089
 
+##Defineing ne and ni. Different ne's and ni's can be tested by external input or for loops##
 #n_grid<-expand.grid(list(25:40,seq(100,150, by = 5)))
 #ne<-n_grid[ind,1]
 #ni<-n_grid[ind,2]
@@ -78,9 +81,9 @@ nv<-c(ne=ne,ni=ni)
 put2 <- NULL#Defining a dataframe/vector to store the prediction error#
 
 ##Defining initial conditions##
-y0=c(S = 3.5e5, V = 682, E,I)
+y0=c(S = 3.5e5, V = 5.32e3, E,I)
 
-##Optimization of parameters##
+##Parameter fitting. Different strating values can be set by external input or for loops##
 #for (j in 1:2){
   #for (l in 1:2){
     parms <-c(k2 = 1.4e-7,taue=27.7,taui=9.1 ,k5 =49.9)
@@ -99,5 +102,5 @@ y0=c(S = 3.5e5, V = 682, E,I)
   #}
 #}
 ##The parameters and the evaluation as the output##
-write.csv(put2,file = paste0(DVdir,'MSGD/African.csv'))
+write.csv(put2,file = paste0(DVdir,'MSGD_African.csv'))
 #write.csv(put2,file = paste0(DVdir,'MSGD/Africann',ind,'.csv'))
