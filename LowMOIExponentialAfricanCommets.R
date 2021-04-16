@@ -50,23 +50,22 @@ k1 = 3.11e-2
 N = 1.94e6
 k6=0.05089
 
-##Parameter fitting. Different strating values can be set by external input or for loops. res2 is the prediction error.##
+##Parameter fitting. Different strating values can be set by external input or for loops. res is the prediction error.##
 #for(j in seq(1.50,1.56,0.002)){
 #  for(l in seq(3.4,3.8,0.02)){
-    parms<-c(k2=1.6e-7,k3=1.0e-6,k4=1e-5,k5=50)
+    parms<-c(k2=1.54e-7,k3=3.8e-3,k4=1e-5,k5=7.4)
     fit_af_cm <- nls.lm(parms,fn=ssq, lower = c (1e-10,1e-10,0,1e-4),upper=c(0.1,10,10,1e6),control = nls.lm.control(maxiter = 800))#Nonlinear Least Squares to minimize the prediction errors#
     ##Integration and calculation of the prediction error##
     out <- ode(y0e,t,exp_delay_full_model,fit_af_cm$par)
     prd <- data.frame(out)
     prd <- prd[prd$time %in% virus2$Time,]
-    res1 <- prd$V/virus2$VR.Avg-1
-    res2 <- (prd$V-virus2$VR.Avg)/virus2$VR.Sdv
+    res <- (prd$V-virus2$VR.Avg)/virus2$VR.Sdv
     prds<-prd[prd$time>9&prd$time<68,]
     sc = prds$S+prds$I1+prds$I2
     pi = (prds$I1+prds$I2)/sc*100
     pp = prds$I2/sc*100
     cp <- c(as.numeric(!(pi>(spc$African_ExpressingPercentage_average+spc$African_ExpressingPercentage_average))),as.numeric(!(pp<(spc$African_ExpressingPercentage_average-spc$African_ExpressingPercentage_average))))
-    put<-rbind(put,c(parms,fit_af_cm$par,res1%*%res1,res2%*%res2,cp%*%cp))
+    put<-rbind(put,c(parms,fit_af_cm$par,res%*%res,cp%*%cp))
 #  }
 #}
 
