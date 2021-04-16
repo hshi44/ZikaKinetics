@@ -56,8 +56,9 @@ k6=0.05089
     parms<-c(k4=1e-2,k5=14,tau=15.3)
     fit_af_fd_new <- nls.lm(par=parms,fn=ssq,lower = c (1e-9,1e-4,0.1),control = nls.lm.control(maxiter = 300))#Nonlinear Least Squares to minimize the prediction errors#
     ##Integration and calculation of the prediction error##
-    out <- ode(y0,virus$time,fixed_delay_model,fit_af_fd_new$par)
+    out <- ode(y0,t,fixed_delay_model,fit_af_fd_new$par)
     prd <- data.frame(out)
+    prd <- prd[prd$time %in% virus$time,]
     res <- prd$V / virus$V-1
     put <- rbind(put,c(parms,fit_af_fd_new$par,res%*%res))
 #  }
