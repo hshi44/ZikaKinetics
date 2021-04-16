@@ -50,7 +50,7 @@ k1 = 3.11e-2
 N = 1.94e6
 k6=0.06470
 
-##Parameter fitting. Different strating values can be set by external input or for loops. res2 is the prediction error.##
+##Parameter fitting. Different strating values can be set by external input or for loops. res is the prediction error.##
 #for(j in seq(1.50,1.56,0.002)){
 #  for(l in seq(3.4,3.8,0.02)){
     parms<-c(k2=4.4e-6,k3=2.2e-2,k4=2.2e-2,k5=1.89)
@@ -59,14 +59,13 @@ k6=0.06470
     out <- ode(y0,t,exp_delay_full_model,fit_as_cm$par)
     prd <- data.frame(out)
     prd <- prd[prd$time %in% virus2$Time,]
-    res1 <- prd$V/virus2$PR.Avg-1
-    res2 <- (prd$V-virus2$PR.Avg)/virus2$PR.Sdv
+    res <- (prd$V-virus2$PR.Avg)/virus2$PR.Sdv
     prds<-prd[prd$time>9&prd$time<68,]
     sc = prds$S+prds$I1+prds$I2
     pi = (prds$I1+prds$I2)/sc*100
     pp = prds$I2/sc*100
     cp <- c(as.numeric(!(pi>(spc$Asian_ExpressingPercentage_average+spc$Asian_ExpressingPercentage_average))),as.numeric(!(pp<(spc$Asian_ExpressingPercentage_average-spc$Asian_ExpressingPercentage_average))))
-    put2<-rbind(put2,c(parms,fit_as_cm$par,res1%*%res1,res2%*%res2,cp%*%cp))
+    put2<-rbind(put2,c(parms,fit_as_cm$par,res%*%res,cp%*%cp))
 #  }
 #}
 
