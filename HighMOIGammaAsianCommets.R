@@ -79,7 +79,7 @@ y0=c(V = 0.1, E,I)
 ##Parameter fitting. Different strating values can be set by external input or for loops##
 #for(j in 1:10){
 #  for(l in 1:10){
-    parms<-c(taue=12.0, taui=17,k5=4.5)
+    parms<-c(taue=12.0, taui=16,k5=4.5)
     fit_as_gd_os <- nls.lm(par=parms,fn=ssq_gd, lower = c (1e-4,1e-4,1e-5),control = nls.lm.control(maxiter = 500))#Nonlinear Least Squares to minimize the prediction errors#
     ##Integration and calculation of the prediction error##
     out <- ode(y0,virus$time,gamma_test,fit_as_gd_os$par)
