@@ -4,7 +4,9 @@
 ##Loading the packages##
 library(deSolve)
 library(minpack.lm)
-DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" ##Direcoty where data files are##
+##Direcoty where data files are##
+#DVdir <- "ZikaModelParameterOptimization/ZikaKinetics/" 
+DVdir <-""
 
 ##Defining the model##
 gamma_delay_model <- function(time, y, parms,nv){
@@ -99,5 +101,5 @@ y0=c(S = 3.5e5, V = 682, E,I)
   #}
 #}
 ##The parameters and the evaluation as the output##
-write.csv(put2,file = paste0(DVdir,'MSGD/Asian.csv'))
+write.csv(put2,file = paste0(DVdir,'MSGD_Asian.csv'))
 #write.csv(put2,file = paste0(DVdir,'MSGD/Asiann',ind,'.csv'))
