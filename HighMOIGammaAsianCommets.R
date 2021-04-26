@@ -30,7 +30,7 @@ gamma_test <- function(time, y, parms,nv){
   })
 }
 
-##Defineing the function ssq to integrate and evaluate the prediction error of parameter set p##
+##Defining the function ssq to integrate and evaluate the prediction error of parameter set p##
 ssq_gd <- function(p){
   out <- ode(y0,t,gamma_test,p)
   prd <- data.frame(out)
@@ -39,11 +39,11 @@ ssq_gd <- function(p){
   return(res)
 }
 
-##Reading experimetnal data from file(s)##
+##Reading experimental data from file(s)##
 counts <- read.csv(paste0(DVdir,'CountsforHighMOIModel.csv'))
 virus <- data.frame(counts[,c(1,3)])
 colnames(virus) <- c("time","V")
-##Time rage of the intergration##
+##Time rage of the integration##
 t <- c(seq(0,64,length=200),virus$time)
 t <- sort(unique(t))
 
@@ -54,7 +54,7 @@ put <- NULL
 
 k6=0.06470
 
-##Defineing ne and ni. Different ne's and ni's can be tested by external input or for loops##
+##Defining ne and ni. Different ne's and ni's can be tested by external input or for loops##
 #n_grid<-expand.grid(list(20:25,c(5*(10:20),125,200,500,1000)))
 #ne<-n_grid[argu+1,1]
 #ni<-n_grid[argu+1,2]
@@ -76,7 +76,7 @@ E[1]=4.28e5
 y0=c(V = 0.1, E,I)
 
 
-##Parameter fitting. Different strating values can be set by external input or for loops##
+##Parameter fitting. Different starting values can be set by external input or for loops##
 #for(j in 1:10){
 #  for(l in 1:10){
     parms<-c(taue=12.0, taui=16,k5=4.5)
@@ -89,5 +89,12 @@ y0=c(V = 0.1, E,I)
 #  }
 #}
 
+##Plotting the predicted virus growth curve with optimized parameters. The dots represent experimental data. The y-axis is on the log scale. Write the output virus and cell kinetics as a file. Comment these lines out if the script is used for parameter optimization only.##
+out <- ode(y0,t,gamma_test,fit_as_gd_os$par)
+prd <- data.frame(out)
+plot(prd$time,prd$V,type = 'l',log="y",xlab = 'Time (h.p.i.)',ylab = 'Virus Titer (PFU/mL)',ylim = c(1e1,1e8))
+points(virus)
+write.csv(put,file = 'OSGD_Asian_modeloutput.csv')
+
 ##The parameters and the evaluation as the output##
-write.csv(put,file = paste0(DVdir,'OSGD_Asian.csv'))
+write.csv(put,file = paste0(DVdir,'OSGD_Asian_parameters.csv'))
