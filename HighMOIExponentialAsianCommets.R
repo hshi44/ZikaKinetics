@@ -17,7 +17,7 @@ exp_delay_simple_model <- function(time, y, parms){
   })
 }
 
-##Defineing the function ssq to integrate and evaluate the prediction error of parameter set p##
+##Defining the function ssq to integrate and evaluate the prediction error of parameter set p##
 ssq_ed <- function(p){
   out <- ode(y0,t,exp_delay_simple_model,p)
   prd <- data.frame(out)
@@ -26,11 +26,11 @@ ssq_ed <- function(p){
   return(res)
 }
 
-##Reading experimetnal data from file(s)##
+##Reading experimental data from file(s)##
 counts <- read.csv(paste0(DVdir,'CountsforHighMOIModel.csv'))
 virus <- data.frame(counts[,c(1,3)])
 colnames(virus) <- c("time","V")
-##Time rage of the intergration##
+##Time rage of the integration##
 t <- c(seq(0,64,length=200),virus$time)
 t <- sort(unique(t))
 ##Defining initial conditions##
@@ -43,7 +43,7 @@ put <- NULL
 
 k6=0.06470
 
-##Parameter fitting. Different strating values can be set by external input or for loops##
+##Parameter fitting. Different starting values can be set by external input or for loops##
 #for(j in 1:10){
 #  for(l in 1:10){
     parms<-c(k3=5.6e-5,k4=1e-8,k5=1.3)
@@ -56,5 +56,12 @@ k6=0.06470
 #  }
 #}
 
+##Plotting the predicted virus growth curve with optimized parameters. The dots represent experimental data. The y-axis is on the log scale. Write the output virus and cell kinetics as a file. Comment these lines out if the script is used for parameter optimization only.##
+out <- ode(y0,t,exp_delay_simple_model,fit_as_ed$par)
+prd <- data.frame(out)
+plot(prd$time,prd$V,type = 'l',log="y",xlab = 'Time (h.p.i.)',ylab = 'Virus Titer (PFU/mL)',ylim = c(1e1,1e8))
+points(virus)
+write.csv(prd,file = paste0(DVdir,'OSED_Asian_modeloutput.csv'))
+
 ##The parameters and the evaluation as the output##
-write.csv(put,file = paste0(DVdir,'OSED_Asian.csv'))
+write.csv(put,file = paste0(DVdir,'OSED_Asian_parameters.csv'))
