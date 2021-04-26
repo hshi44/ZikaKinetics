@@ -24,7 +24,7 @@ fixed_delay_model <- function(time, y, parms){
   })
 }
 
-##Defineing the function ssq to integrate and evaluate the prediction error of parameter set p##
+##Defining the function ssq to integrate and evaluate the prediction error of parameter set p##
 ssq <- function(p){
   out <- dede(y0,t,fixed_delay_model,p)
   prd <- data.frame(out)
@@ -33,11 +33,11 @@ ssq <- function(p){
   return(res)
 }
 
-##Reading experimetnal data from file(s)##
+##Reading experimental data from file(s)##
 counts <- read.csv(paste0(DVdir,'CountsforHighMOIModel.csv'))
 virus <- data.frame(counts[,c(1,2)])
 colnames(virus) <- c("time","V")
-##Time rage of the intergration##
+##Time rage of the integration##
 t <- c(seq(0,64,length=200),virus$time)
 t <- sort(unique(t))
 ##Defining initial conditions##
@@ -50,7 +50,7 @@ put <- NULL
 
 k6=0.05089
 
-##Parameter fitting. Different strating values can be set by external input or for loops##
+##Parameter fitting. Different starting values can be set by external input or for loops##
 #for(j in 1:10){
 #  for(l in 1:10){
     parms<-c(k4=1e-2,k5=14,tau=15.3)
@@ -64,5 +64,11 @@ k6=0.05089
 #  }
 #}
 
+##Plotting the predicted virus growth curve with optimized parameters. The dots represent experimental data. The y-axis is on the log scale. Write the output virus and cell kinetics as a file. Comment these lines out if the script is used for parameter optimization only.##
+prd <- data.frame(out)
+plot(prd$time,prd$V,type = 'l',log="y",xlab = 'Time (h.p.i.)',ylab = 'Virus Titer (PFU/mL)',ylim = c(1e1,1e9))
+points(virus)
+write.csv(put,file = 'OSFD_African_modeloutput.csv')
+
 ##The parameters and the evaluation as the output##
-write.csv(put,file = paste0(DVdir,'OSFD_African.csv'))
+write.csv(put,file = paste0(DVdir,'OSFD_African_parameters.csv'))
