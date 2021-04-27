@@ -44,7 +44,7 @@ ssq_af <- function(p){
 ##Reading experimental data from file(s)##
 virus2 <- read.csv(paste0(DVdir,'CountsforLowMOIModel.csv'))
 spc <- read.csv(paste0(DVdir,'LowMOIStainingPercentage.csv'))
-##Time rage of the intergration##
+##Time rage of the integration##
 t <- c(seq(0,150,length=300),virus2$Time)
 t <- sort(unique(t))
 ##Defining initial conditions##
