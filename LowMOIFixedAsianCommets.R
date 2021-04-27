@@ -24,13 +24,13 @@ fix_delay_ms <- function(time, y,parm){
   })
 }
 
-##Defineing the function ssq_af to integrate and evaluate the prediction error of parameter set p##
+##Defining the function ssq_af to integrate and evaluate the prediction error of parameter set p##
 ssq_as <- function(p){
   out <- dede(y0,t,fix_delay_ms,p)
   prd <- data.frame(out)
   prd <- prd[prd$time %in% virus2$Time,]
   res <- (prd$V-virus2$PR.Avg)/virus2$PR.Sdv
-  ##Optional: Comparing the model predicted ratio of infected cells with experimetal measurements##
+  ##Optional: Comparing the model predicted ratio of infected cells with experimental measurements##
   #prds<-prd[prd$time>9&prd$time<68,]
   #sc = prds$S+prds$I1+prds$I2
   #pi = (prds$I1+prds$I2)/sc*100
@@ -41,7 +41,7 @@ ssq_as <- function(p){
 }
 
 
-##Reading experimetnal data from file(s)##
+##Reading experimental data from file(s)##
 virus2 <- read.csv(paste0(DVdir,'CountsforLowMOIModel.csv'))
 spc <- read.csv(paste0(DVdir,'LowMOIStainingPercentage.csv'))
 ##Time rage of the intergration##
@@ -58,7 +58,7 @@ k1 = 3.11e-2
 N = 1.94e6
 k6=0.06470
 
-##Parameter fitting. Different strating values can be set by external input or for loops. res is the prediction error.##
+##Parameter fitting. Different starting values can be set by external input or for loops. res is the prediction error.##
 #for (j in 1:2){
   #for (l in 1:2){
     parms<-c(k2=6.1e-6,k4=1.6e-2,k5=0.94,tau=8.5)
@@ -76,6 +76,13 @@ k6=0.06470
     put2<-rbind(put2,c(parms,fit_as_msfd$par,res%*%res,cp%*%cp))
   #}
 #}
+
+##Plotting the predicted virus growth curve with optimized parameters. The dots represent experimental averages. The y-axis is on the log scale. Write the output virus and cell kinetics as a file. Comment these lines out if the script is used for parameter optimization only.##
+prd <- data.frame(out)
+plot(prd$time,prd$V,type = 'l',log="y",xlab = 'Time (h.p.i.)',ylab = 'Virus Titer (PFU/mL)',ylim = c(1e1,1e8))
+points(virus2$Time,virus2$PR.Avg)
+write.csv(put2,file = paste0(DVdir,'MSFD_Asian_modeloutput.csv'))
+
 ##The parameters and the evaluation as the output##
-write.csv(put2,file = paste0(DVdir,'MSFD_Asian.csv'))
+write.csv(put2,file = paste0(DVdir,'MSFD_Asian_parameters.csv'))
 #write.csv(put2,file = paste0(DVdir,'MSFD/Asiann',ind,'.csv'))
