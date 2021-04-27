@@ -64,7 +64,7 @@ k6=0.05089
 #  }
 #}
 
-##Plotting the predicted virus growth curve with optimized parameters. The dots represent experimental data. The y-axis is on the log scale. Write the output virus and cell kinetics as a file. Comment these lines out if the script is used for parameter optimization only.##
+##Plotting the predicted virus growth curve with optimized parameters. The dots represent experimental average. The y-axis is on the log scale. Write the output virus and cell kinetics as a file. Comment these lines out if the script is used for parameter optimization only.##
 prd <- data.frame(out)
 plot(prd$time,prd$V,type = 'l',log="y",xlab = 'Time (h.p.i.)',ylab = 'Virus Titer (PFU/mL)',ylim = c(1e1,1e9))
 points(virus)
