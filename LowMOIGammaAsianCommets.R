@@ -30,7 +30,7 @@ gamma_delay_model <- function(time, y, parms,nv){
   })
 }
 
-##Defineing the function ssq_msas to integrate and evaluate the prediction error of parameter set p##
+##Defining the function ssq_msas to integrate and evaluate the prediction error of parameter set p##
 ssq_msas <- function(p){
   t <- c(seq(0,150,length=300),virus2$Time)
   t <- sort(unique(t))
@@ -38,7 +38,7 @@ ssq_msas <- function(p){
   prd <- data.frame(out)
   prd <- prd[prd$time %in% virus2$Time,]
   res <- (prd$V-virus2$PR.Avg)/virus2$PR.Sdv
-  ##Optional: Comparing the model predicted ratio of infected cells with experimetal measurements##
+  ##Optional: Comparing the model predicted ratio of infected cells with experimental measurements##
   #prds<-prd[prd$time>9&prd$time<68,]
   #sc = prds$S+prds$I1+prds$I2
   #pi = (prds$I1+prds$I2)/sc*100
@@ -49,11 +49,10 @@ ssq_msas <- function(p){
 }
 
 
-
-##Reading experimetnal data from file(s)##
+##Reading experimental data from file(s)##
 virus2 <- read.csv(paste0(DVdir,'CountsforLowMOIModel.csv'))
 spc <- read.csv(paste0(DVdir,'LowMOIStainingPercentage.csv'))
-##Time rage of the intergration##
+##Time rage of the integration##
 t <- c(seq(0,150,length=300),virus2$Time)
 t <- sort(unique(t))
 
@@ -62,7 +61,7 @@ k1 = 3.11e-2
 N = 1.94e6
 k6=0.07045
 
-##Defineing ne and ni. Different ne's and ni's can be tested by external input or for loops##
+##Defining ne and ni. Different ne's and ni's can be tested by external input or for loops##
 #n_grid<-expand.grid(list(seq(40,60, by=2),1:5))
 #ne<-n_grid[ind,1]
 #ni<-n_grid[ind,2]
@@ -83,7 +82,7 @@ put2 <- NULL#Defining a dataframe/vector to store the prediction error#
 ##Defining initial conditions##
 y0=c(S = 3.5e5, V = 682, E,I)
 
-##Parameter fitting. Different strating values can be set by external input or for loops##
+##Parameter fitting. Different starting values can be set by external input or for loops##
 #for (j in 1:2){
   #for (l in 1:2){
     parms <-c(k2 = 4e-6,taue=7.2,taui=100 ,k5 =0.68)
@@ -101,6 +100,13 @@ y0=c(S = 3.5e5, V = 682, E,I)
     put2 <- rbind(put2,c(parms,fit_as_gd$par,nv,res%*%res,cp%*%cp))
   #}
 #}
+
+##Plotting the predicted virus growth curve with optimized parameters. The dots represent experimental averages. The y-axis is on the log scale. Write the output virus and cell kinetics as a file. Comment these lines out if the script is used for parameter optimization only.##
+prd <- data.frame(out)
+plot(prd$time,prd$V,type = 'l',log="y",xlab = 'Time (h.p.i.)',ylab = 'Virus Titer (PFU/mL)',ylim = c(1e1,1e8))
+points(virus2$Time,virus2$PR.Avg)
+write.csv(put2,file = paste0(DVdir,'MSGD_Asian_modeloutput.csv'))
+
 ##The parameters and the evaluation as the output##
-write.csv(put2,file = paste0(DVdir,'MSGD_Asian.csv'))
+write.csv(put2,file = paste0(DVdir,'MSGD_Asian_parameters.csv'))
 #write.csv(put2,file = paste0(DVdir,'MSGD/Asiann',ind,'.csv'))
